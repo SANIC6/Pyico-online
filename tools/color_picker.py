@@ -12,6 +12,8 @@ import pygame
 import pygame.surfarray
 
 
+
+
 def load_palette(png_path: str | Path, row: int | None = None) -> dict[int, str]:
     """Load palette strip PNG, return {index: '#rrggbb'} left-to-right.
 
@@ -52,5 +54,4 @@ def load_palette(png_path: str | Path, row: int | None = None) -> dict[int, str]
     return palette
 
 
-# Alias matching your wording ("load_in a png").
 load_in = load_palette
