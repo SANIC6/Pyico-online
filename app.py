@@ -39,8 +39,6 @@ class Mouse:
         else:
             self.state = 'idk'
     def sprite_editor(self, sprite_editor_box):
-        if self.state != 'sprite-editor':
-            return
         if not self.left_button_pressed and not self.right_button_pressed:
             return
         cx = int((self.pos[0] - sprite_editor_box.x) // self.cell_size)
@@ -50,13 +48,7 @@ class Mouse:
                 self.canvas[cy][cx] = self.color
             elif self.right_button_pressed:
                 self.canvas[cy][cx] = None
-    def update(self,sprite_editor_box):
-        self.pos = list(pygame.mouse.get_pos())
-        self.pos[0] /= DISPLAY_SCALE
-        self.pos[1] /= DISPLAY_SCALE
-
-        self.states(sprite_editor_box)
-
+    def handle_input(self):
         pressed = pygame.mouse.get_pressed()
         if pressed[0]:
             self.left_button_pressed = True
@@ -75,6 +67,14 @@ class Mouse:
             self.pos[0] = WINDOW_SIZE[0]
         if self.pos[1] > WINDOW_SIZE[1]:
             self.pos[1] = WINDOW_SIZE[1]
+    def update(self,sprite_editor_box):
+        self.pos = list(pygame.mouse.get_pos())
+        self.pos[0] /= DISPLAY_SCALE
+        self.pos[1] /= DISPLAY_SCALE
+        self.handle_input()
+        self.states(sprite_editor_box)
+        if self.state == 'sprite-editor':
+            self.sprite_editor(sprite_editor_box)
     def draw_canvas(self, surface, sprite_editor_box):
         for y in range(8):
             for x in range(8):
