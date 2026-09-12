@@ -20,6 +20,7 @@ class Mouse:
         self.color = COLORS[0]
         self.game = game
         self.img_num = 0
+        self.selected_sprite = 0
         self.state = 'sprite-editor'
         self.canvas: list = [[None] * 8 for _ in range(8)]
         self.cell_size = 8
@@ -32,6 +33,15 @@ class Mouse:
             if rect.collidepoint(int(self.pos[0]), int(self.pos[1])):
                 if i in COLORS:
                     self.color = COLORS[i]
+                break
+    def select_sprite(self):
+        if not self.left_button_pressed:
+            return
+        for i, rect in enumerate(self.game.sprite_rects):
+            if rect.collidepoint(int(self.pos[0]), int(self.pos[1])):
+                if i != self.selected_sprite:
+                    self.selected_sprite = i
+                    self.canvas = self.game.get_or_create_sprite(i)
                 break
     def states(self,sprite_editor_rect):
         if sprite_editor_rect.collidepoint(int(self.pos[0]), int(self.pos[1])):
@@ -59,6 +69,7 @@ class Mouse:
         else:
             self.right_button_pressed = False
         self.palette()
+        self.select_sprite()
         if self.pos[0] < 0:
             self.pos[0] = 0
         if self.pos[1] < 0:
@@ -95,7 +106,11 @@ class Editor:
         self.state = 'pixel'
         self.screen = pygame.display.set_mode((WINDOW_SIZE[0] * DISPLAY_SCALE, WINDOW_SIZE[1] * DISPLAY_SCALE))
         self.color_rect = []
+        self.sprite_rects = []
+        self.sprite_cols = 9
+        self.sprite_rows = 15
         self.mouse = Mouse(self)
+        self.mouse.canvas = self.get_or_create_sprite(0)
         self.sprite_editor_box = pygame.Rect(8,16,64,64)
         self.background = pygame.Rect(0,0,WINDOW_SIZE[0],WINDOW_SIZE[1])
         self.top_bar = pygame.Rect(0, 0, WINDOW_SIZE[0], 8)
@@ -103,6 +118,14 @@ class Editor:
         self.pallete_rect = pygame.Rect(8-3, 128-40-3, (8*8)+6, 16+6)
         self.sprites_background = pygame.Rect(128-48, 16, 72, WINDOW_SIZE[1])
         pygame.display.set_caption("Pyico Editor")
+
+    @staticmethod
+    def new_blank_canvas():
+        return [[None] * 8 for _ in range(8)]
+    def get_or_create_sprite(self, index):
+        if index not in self.sprite_data:
+            self.sprite_data[index] = self.new_blank_canvas()
+        return self.sprite_data[index]
     def draw_pallete(self,x_pos,y_pos):
         self.color_rect.clear()
         color_index = 0
@@ -115,6 +138,20 @@ class Editor:
                     if COLORS[color_index] == self.mouse.color:
                         pygame.draw.rect(self.game_screen, (255, 255, 255), rect, 1)
                 color_index += 1
+
+    def draw_sprite_slots(self):
+        self.sprite_rects.clear()
+        for y in range(self.sprite_rows):
+            for x in range(self.sprite_cols):
+                rect = pygame.Rect(
+                    self.sprites_background.x + x * 8,
+                    self.sprites_background.y + y * 8,
+                    8, 8,
+                )
+                pygame.draw.rect(self.game_screen, COLORS[0], rect)
+                self.sprite_rects.append(rect)
+                if len(self.sprite_rects) - 1 == self.mouse.selected_sprite:
+                    pygame.draw.rect(self.game_screen, (255, 255, 255), rect, 1)
 
     def run(self):
         while self.running:
@@ -130,12 +167,14 @@ class Editor:
             pygame.draw.rect(self.game_screen, COLORS[0], self.sprite_editor_box)
             pygame.draw.rect(self.game_screen, COLORS[0], self.pallete_rect,3)
             self.draw_pallete(8, 128-40)
+            self.draw_sprite_slots()
             self.mouse.update(self.sprite_editor_box)
             self.mouse.sprite_editor(self.sprite_editor_box)
             self.mouse.draw_canvas(self.game_screen, self.sprite_editor_box)
             self.mouse.draw(self.game_screen)
             self.screen.blit(pygame.transform.scale(self.game_screen, (WINDOW_SIZE[0] * DISPLAY_SCALE, WINDOW_SIZE[1] * DISPLAY_SCALE)), (0, 0))
             pygame.display.flip()
+            print(self.sprite_data)
 
         pygame.quit()
 
