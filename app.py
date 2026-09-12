@@ -150,7 +150,15 @@ class Editor:
                 )
                 pygame.draw.rect(self.game_screen, COLORS[0], rect)
                 self.sprite_rects.append(rect)
-                if len(self.sprite_rects) - 1 == self.mouse.selected_sprite:
+                idx = len(self.sprite_rects) - 1
+                grid = self.sprite_data.get(idx)
+                if grid is not None:
+                    for py in range(8):
+                        for px in range(8):
+                            c = grid[py][px]
+                            if c is not None and c in COLORS:
+                                pygame.draw.rect(self.game_screen, COLORS[c], pygame.Rect(rect.x + px, rect.y + py, 1, 1))
+                if idx == self.mouse.selected_sprite:
                     pygame.draw.rect(self.game_screen, (255, 255, 255), rect, 1)
 
     def run(self):
