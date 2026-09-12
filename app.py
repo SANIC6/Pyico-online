@@ -17,7 +17,7 @@ class Mouse:
         self.pos =[0,0]
         self.left_button_pressed = False
         self.right_button_pressed = False
-        self.color = COLORS[0]
+        self.color_index = 0
         self.game = game
         self.img_num = 0
         self.selected_sprite = 0
@@ -32,7 +32,7 @@ class Mouse:
         for i, rect in enumerate(self.game.color_rect):
             if rect.collidepoint(int(self.pos[0]), int(self.pos[1])):
                 if i in COLORS:
-                    self.color = COLORS[i]
+                    self.color_index = i
                 break
     def select_sprite(self):
         if not self.left_button_pressed:
@@ -55,7 +55,7 @@ class Mouse:
         cy = int((self.pos[1] - sprite_editor_box.y) // self.cell_size)
         if 0 <= cx < 8 and 0 <= cy < 8:
             if self.left_button_pressed:
-                self.canvas[cy][cx] = self.color
+                self.canvas[cy][cx] = self.color_index
             elif self.right_button_pressed:
                 self.canvas[cy][cx] = None
     def handle_input(self):
@@ -90,8 +90,8 @@ class Mouse:
         for y in range(8):
             for x in range(8):
                 c = self.canvas[y][x]
-                if c is not None:
-                    pygame.draw.rect(surface, c, pygame.Rect(sprite_editor_box.x + x * self.cell_size, sprite_editor_box.y + y * self.cell_size, self.cell_size, self.cell_size))
+                if c is not None and c in COLORS:
+                    pygame.draw.rect(surface, COLORS[c], pygame.Rect(sprite_editor_box.x + x * self.cell_size, sprite_editor_box.y + y * self.cell_size, self.cell_size, self.cell_size))
     def draw(self, surface):
         
         surface.blit(self.mouse_idle_img, (self.pos[0], self.pos[1]))
@@ -135,7 +135,7 @@ class Editor:
                     rect = pygame.Rect(x_pos+x*8, y_pos+y*8, 8, 8)
                     pygame.draw.rect(self.game_screen, COLORS[color_index], rect)
                     self.color_rect.append(rect)
-                    if COLORS[color_index] == self.mouse.color:
+                    if color_index == self.mouse.color_index:
                         pygame.draw.rect(self.game_screen, (255, 255, 255), rect, 1)
                 color_index += 1
 
@@ -174,7 +174,6 @@ class Editor:
             self.mouse.draw(self.game_screen)
             self.screen.blit(pygame.transform.scale(self.game_screen, (WINDOW_SIZE[0] * DISPLAY_SCALE, WINDOW_SIZE[1] * DISPLAY_SCALE)), (0, 0))
             pygame.display.flip()
-            print(self.sprite_data)
 
         pygame.quit()
 
