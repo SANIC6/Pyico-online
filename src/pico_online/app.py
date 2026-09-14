@@ -2,7 +2,7 @@ from pathlib import Path
 
 import pygame
 
-from tools.constants import COLORS
+from pico_online.tools.constants import COLORS
 
 import logging
 

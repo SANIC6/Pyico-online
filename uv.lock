@@ -79,6 +79,8 @@ dependencies = [
     { name = "numpy" },
     { name = "pygame" },
     { name = "pygame-ce" },
+    { name = "toml" },
+    { name = "tomlkit" },
 ]
 
 [package.metadata]
@@ -87,6 +89,8 @@ requires-dist = [
     { name = "numpy", specifier = ">=2.5.2" },
     { name = "pygame", specifier = ">=2.6.1" },
     { name = "pygame-ce", specifier = ">=2.5.8" },
+    { name = "toml", specifier = ">=0.10.2" },
+    { name = "tomlkit", specifier = ">=0.15.1" },
 ]
 
 [[package]]
@@ -131,4 +135,22 @@ wheels = [
     { url = "https://files.pythonhosted.org/packages/63/92/c99ed51479f2d2a5d7fc9d5aa3b880e4c0fcc87f30cb95ecf325f35dd2fd/pygame_ce-2.5.8-cp315-cp315-win32.whl", hash = "sha256:312a01ff5439a0bd2e55b56683518454da4cbe4cad493d0580e9c49f6aacc2d8", size = 9254928, upload-time = "2026-08-09T11:39:29.525Z" },
     { url = "https://files.pythonhosted.org/packages/87/41/404836598d666ffe02681fd0c29f013daaa8baf18e5de5f7a5d4870b6105/pygame_ce-2.5.8-cp315-cp315-win_amd64.whl", hash = "sha256:5b789aa7e4239be025c9de8428c2c422f0811f0e3dd702b574d836fd9ae040eb", size = 9833657, upload-time = "2026-08-09T11:39:31.897Z" },
     { url = "https://files.pythonhosted.org/packages/5f/a2/7a844f772c6f0967e75d49cb10602fbb878b9daee1cc080d2b9597bcc873/pygame_ce-2.5.8-cp315-cp315-win_arm64.whl", hash = "sha256:28c4fed3870e3edf72ea7ea359bb5f64c55db0fb9cb3bdb26b4b674b4b4bcff4", size = 10410231, upload-time = "2026-08-09T11:39:34.184Z" },
+]
+
+[[package]]
+name = "toml"
+version = "0.10.2"
+source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/be/ba/1f744cdc819428fc6b5084ec34d9b30660f6f9daaf70eead706e3203ec3c/toml-0.10.2.tar.gz", hash = "sha256:b3bda1d108d5dd99f4a20d24d9c348e91c4db7ab1b749200bded2f839ccbe68f", size = 22253, upload-time = "2020-11-01T01:40:22.204Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/44/6f/7120676b6d73228c96e17f1f794d8ab046fc910d781c8d151120c3f1569e/toml-0.10.2-py2.py3-none-any.whl", hash = "sha256:806143ae5bfb6a3c6e736a764057db0e6a0e05e338b5630894a5f779cabb4f9b", size = 16588, upload-time = "2020-11-01T01:40:20.672Z" },
+]
+
+[[package]]
+name = "tomlkit"
+version = "0.15.1"
+source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/94/96/e07752635b98536177fa1f37671c8f3cdde2e724c6bcf6034b2cfb571565/tomlkit-0.15.1.tar.gz", hash = "sha256:e25bbf38843005246210a12982776f27f99cb9be67160e14434d0c0d21ee1e97", size = 180129, upload-time = "2026-07-17T01:48:04.562Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/13/bc/8c13eb66537dce1d2bd3a57132902f38d0e7f5bb46fa9f4daed9fe9d76ee/tomlkit-0.15.1-py3-none-any.whl", hash = "sha256:177a05aece5a8ca5266fd3c448abb47b8d352f09d477d3ca8332db4d89b24304", size = 49449, upload-time = "2026-07-17T01:48:05.728Z" },
 ]
