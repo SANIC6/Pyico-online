@@ -1,9 +1,7 @@
 from pathlib import Path
 
 import pygame
-
-from pico_online.tools.constants import COLORS
-
+from pyico.tools.constants import COLORS
 import logging
 
 logger = logging.getLogger(__name__)

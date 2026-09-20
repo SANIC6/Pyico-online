@@ -10,7 +10,7 @@ PICO-8-style sprite editor prototype (pygame). No README, no CI, no tests/lint c
 - `uv run python -m py_compile app.py` — syntax check. No test/lint/typecheck commands exist — don't invent them.
 
 ## Entrypoints — don't confuse
-- `app.py` = real app (`Editor.run()` loop). `console/main.py` = throwaway argparse stub. `src/pico_online/__init__.py` = hello stub wired to `pico-online` script (stale, not the app).
+- `app.py` = real app (`Editor.run()` loop). `console/main.py` = throwaway argparse stub. `src/pyico` = hello stub wired to `pico-online` script (stale, not the app).
 - Never `import console.main` — it calls `parse_args()` at module top level.
 
 ## Wiring & gotchas
