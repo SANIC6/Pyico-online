@@ -78,10 +78,12 @@ class Mouse:
             self.pos[0] = WINDOW_SIZE[0]
         if self.pos[1] > WINDOW_SIZE[1]:
             self.pos[1] = WINDOW_SIZE[1]
-    def update(self,sprite_editor_box):
+    def _update_mouse_pos(self):
         self.pos = list(pygame.mouse.get_pos())
         self.pos[0] /= DISPLAY_SCALE
         self.pos[1] /= DISPLAY_SCALE
+    def update(self,sprite_editor_box):
+        self._update_mouse_pos()
         self.handle_input()
         self.states(sprite_editor_box)
         if self.state == 'sprite-editor':
