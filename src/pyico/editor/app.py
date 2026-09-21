@@ -8,7 +8,7 @@ logger = logging.getLogger(__name__)
 
 WINDOW_SIZE = (160,144)
 DISPLAY_SCALE = 4
-_ASSETS_DIR = Path(__file__).resolve().parent / "editor/assets"
+_ASSETS_DIR = Path(__file__).resolve().parent / "assets"
 
 class Mouse:
     def __init__(self,game):
