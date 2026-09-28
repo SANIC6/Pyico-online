@@ -2,6 +2,7 @@ from pathlib import Path
 
 import pygame
 from pyico.tools.constants import COLORS
+from pyico.editor.save_cart import save_cart
 import logging
 
 logger = logging.getLogger(__name__)
@@ -103,6 +104,9 @@ class Editor:
         self.game_screen = pygame.Surface(WINDOW_SIZE)
         pygame.mouse.set_visible(False)
         self.sprite_data = {}
+        self.tilemap = {}
+        self.sound_data = {}
+        self.music_data = {}
         self.state = 'pixel'
         self.screen = pygame.display.set_mode((WINDOW_SIZE[0] * DISPLAY_SCALE, WINDOW_SIZE[1] * DISPLAY_SCALE))
         self.color_rect = []
@@ -166,6 +170,10 @@ class Editor:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     self.running = False
+
+                if event.type == pygame.KEYDOWN:
+                    if event.key == pygame.K_s:
+                        save_cart(self.sprite_data,self.tilemap,self.sound_data,self.music_data)
 
             self.game_screen.fill((255, 255, 255))
             pygame.draw.rect(self.game_screen, COLORS[1], self.background)
